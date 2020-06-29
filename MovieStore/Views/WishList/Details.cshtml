@@ -1,0 +1,62 @@
+﻿@model MovieStore.Data.Entities.Movie
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.Title)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Title)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.GenreName)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.GenreName)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DirectorName)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.DirectorName)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ProducerName)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.ProducerName)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Cast)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Cast)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Synopsis)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Synopsis)</dd>
+    </dl>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <dl class="row">
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Budget)</dt>
+                <dd class="col-sm-9"> @Html.DisplayFor(model => model.Budget)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Released)</dt>
+                <dd class="col-sm-9"> @Html.DisplayFor(model => model.Released)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Runtime) </dt>
+                <dd class="col-sm-9"> @Html.DisplayFor(model => model.Runtime) minutes</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.PriceForRent)</dt>
+                <dd class="col-sm-9"> @Html.DisplayFor(model => model.PriceForRent) $</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.PriceForBuy)</dt>
+                <dd class="col-sm-9"> @Html.DisplayFor(model => model.PriceForBuy) $</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.SoldItems)</dt>
+                <dd class="col-sm-9"> @Html.DisplayFor(model => model.SoldItems)</dd>
+            </dl>
+        </div>
+        <div class="col-12 col-md-6">
+            <h6> <b>>Official trailer</b></h6>
+            <iframe width="480" height="250" src="@Model.Traller" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,189 @@
+﻿@model MovieStore.Models.MovieViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@* Search Section *@
+<div class="container-fluid text-center">
+    <form asp-action="Search">
+        <div class="search-main p-3">
+            <button type="submit" class="btn search-btn-icon"><i class="fa fa-search"></i></button>
+            <input type="text" class="form-control search-box-style" id="searchmovie" />
+            <button type="submit" class="btn btn-success search-btn">Search</button>
+        </div>
+    </form>
+</div>
+
+@* Banner Section *@
+<div class="container-fluid text-left bookcover-background">
+    <h1 class="display-4 banner-text-style1">Movie Collection</h1>
+    <h4 class="display-4 banner-text-style2">Find Your Next Adventure</h4>
+</div>
+
+
+@* All Movies *@
+<div class="custom-container pt-5">
+    <h2>All Movies!</h2>
+    <h6><em>List of all movies!</em></h6>
+    <div class="row">
+        @foreach (var item in Model.AllMovies)
+        {
+            <div class="col-12 col-md-3 mt-5">
+                <div class="card h-100">
+                    <img src="~/images/@item.PhotoURL" class="img-fluid" style="max-height: 350px;" />
+                    <div class="card-body">
+                        <h5 class="card-title"> @Html.DisplayFor(modelItem => item.Title) </h5>
+                        <h6 class=""><em>by</em> @Html.DisplayFor(modelItem => item.DirectorName)</h6>
+                        <hr />
+                        <p class="card-text"><b>Genre: </b> @Html.DisplayFor(modelItem => item.GenreName)</p>
+                        <p class="card-text"><b>Starring:</b> @Html.DisplayFor(modelItem => item.Cast)</p>
+                        <p class="card-text"><b>Studio:</b> @Html.DisplayFor(modelItem => item.PublisherName)</p>
+
+                        <a asp-action="Details" asp-route-id="@item.Id"> Details...</a>
+                        <hr />
+                        <p class="card-text"><b>Rent:</b> @Html.DisplayFor(modelItem => item.PriceForRent) $</p>
+                        <p class="card-text"><b>Buy:</b> @Html.DisplayFor(modelItem => item.PriceForBuy) $</p>
+
+
+                        <button class="btn btn-secondary btn-block" id="addtowishlist" onclick="AddToWishlist(@item.Id)">
+                            <i class="fas fa-plus"></i> &nbsp; Add To Wishlist
+                        </button>
+
+
+                        <button class="btn btn-success btn-block" id="addToCart" onclick="AddToCart(@item.Id)">
+                            <i class="fas fa-cart-plus"></i> &nbsp; Add To Cart
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class=" container p-4">
+    <div class="row" style="background-color:antiquewhite">
+        <div class="col-md-4 col-12">
+            <h4><i class="fas fa-info"></i> Information</h4>
+
+            <ul style=" list-style-type: none">
+                <li><a href=""><i class="fas fa-angle-right"></i> About Us</a></li>
+                <li><a href=""><i class="fas fa-angle-right"></i> Help</a></li>
+                <li><a href=""><i class="fas fa-angle-right"></i> Privacy Policy</a></li>
+                <li><a href=""><i class="fas fa-angle-right"></i> Terms of Use</a></li>
+                <li><a href=""><i class="fas fa-angle-right"></i> Returns &amp; Exchanges</a></li>
+                <li><a href=""><i class="fas fa-angle-right"></i> Pricing Information</a></li>
+                <li><a href=""><i class="fas fa-angle-right"></i> Sales Tax</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-12">
+            <h4><i class="fas fa-user"></i> My Account</h4>
+            <ul style=" list-style-type: none">
+                <li><a href=""><i class="fas fa-lock"></i> Login</a></li>
+                <li><a href=""><i class="fas fa-cash-register"></i> Register</a></li>
+                <li><a href=""><i class="fas fa-archive"></i> Order History</a></li>
+                <li><a href=""><i class="fas fa-star"></i> Wish List</a></li>
+                <li><a href=""><i class="fas fa-shopping-basket"></i> Shopping Cart</a></li>
+                <li><a href=""><i class="fas fa-mail-bulk"></i> Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-12">
+            <h3> We're social</h3>
+            <ul style=" list-style-type: none">
+                <li><a href="" target="_blank" title="Follow us on Twitter"><i class="fab fa-twitter"></i> twitter</a></li>
+                <li><a href="" target="_blank" title="Find us on Facebook"><i class="fab fa-facebook"></i> facebook</a></li>
+                <li><a href="" target="_blank" title="Subscribe to our Youtube"><i class="fab fa-youtube"></i> youtube</a></li>
+                <li><a href="" target="_blank" title="Follow us on Instagram"><i class="fab fa-instagram"></i>  instagram</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@*<div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/IIguVEImLHg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>*@
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#searchmovie").keyup(function () {
+                var searchString = $("#searchmovie").val();
+                if (searchString.length >= 2) { // console.log("> 2");
+                    window.location = 'Search/';
+                    //$.ajax({
+                    //    type: "GET",
+                    //    url: "/Search/Search?keywords=" + searchString,
+                    //    success: function (data) {
+                    //        console.log("Success");
+                    //        console.log(data);
+
+                    //    },
+                    //    error: function () {
+                    //        alert("error");
+                    //    }
+                    //});
+                }
+            });
+
+        });
+
+        function AddToWishlist(id) {
+            $.ajax({
+                type: "POST",
+                url: "/Home/AddToWishlist/" + id,
+                success: function (data) {
+                    //console.log(data);
+                    if (data.data != "") {
+                        new Noty({
+                            type: 'alert',
+                            layout: 'bottomLeft',
+                            timeout: 3000,
+                            text: 'Successfully Added To Wishlist',
+                            theme: 'sunset'
+                        }).show();
+                    } else {
+                        new Noty({
+                            type: 'error',
+                            layout: 'bottomLeft',
+                            timeout: 3000,
+                            progressBar: true,
+                            text: 'Book Already Exists In The Wishlist',
+                            theme: 'sunset'
+                        }).show();
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        };
+
+        function AddToCart(id) {
+            $.ajax({
+                type: "POST",
+                url: "/ShopCart/AddToCart/" + id,
+                success: function (data) {
+                    console.log("Success");
+                    console.log(data);
+                    new Noty({
+                        type: 'success',
+                        layout: 'bottomLeft',
+                        timeout: 3000,
+                        text: 'Added To Cart',
+                        theme: 'sunset'
+                    }).show();
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+
+    </script>
+
+}

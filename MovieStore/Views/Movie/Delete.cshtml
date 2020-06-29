@@ -1,0 +1,60 @@
+﻿@model MovieStore.Data.Entities.Movie
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>DELETE</h1>
+
+<div>
+    <h4>MOVIE</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.Title)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Title)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.GenreName)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.GenreName)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DirectorName)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.DirectorName)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ProducerName)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.ProducerName)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Cast)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Cast)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Synopsis)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Synopsis)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Budget)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Budget)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Released)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Released)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Runtime) </dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.Runtime) minutes</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.PriceForRent)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.PriceForRent) $</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.PriceForBuy)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.PriceForBuy) $</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.SoldItems)</dt>
+        <dd class="col-sm-9"> @Html.DisplayFor(model => model.SoldItems)</dd>
+
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-block btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+
+
+

@@ -1,0 +1,132 @@
+﻿
+@model MovieStore.Data.Entities.Movie
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="bg-dark text-white text-center p-3 crud-title">Edit a movie</h1>
+<div class="container">
+    <hr />
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <form asp-action="Edit" name="movieEdit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label">Title</label>
+                        <input asp-for="Title" class="form-control" placeholder="Enter title" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-12 col-md-6">
+                            <label asp-for="GenreID" class="control-label">Genre</label>
+                            <input asp-for="GenreName" class="form-control" placeholder="Enter genre" />
+                            <span asp-validation-for="GenreID" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="DirectorID" class="control-label">Director Name</label>
+                            <input asp-for="DirectorName" class="form-control" placeholder="Enter director" />
+                            <span asp-validation-for="DirectorID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12 col-md-12">
+                            <label asp-for="ProducerID" class="control-label">Producer Name</label>
+                            <input asp-for="ProducerName" class="form-control" placeholder="Edit producer" />
+                            <span asp-validation-for="ProducerID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12 col-md-12">
+                            <label asp-for="PublisherID" class="control-label">Publisher Name</label>
+                            <input asp-for="PublisherName" class="form-control" placeholder="Edit publisher" />
+                            <span asp-validation-for="PublisherID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12 col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Cast" class="control-label">Cast</label>
+                                <input asp-for="Cast" class="form-control" placeholder="Enter cast" />
+                                <span asp-validation-for="Cast" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Budget" class="control-label"></label>
+                                <input asp-for="Budget" class="form-control" placeholder="Enter budget" />
+                                <span asp-validation-for="Budget" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Released" class="control-label">Released</label>
+                                <input asp-for="Released" class="form-control" placeholder="Released" />
+                                <span asp-validation-for="Released" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Runtime" class="control-label">Runtime</label>
+                                <input asp-for="Runtime" class="form-control" placeholder="Runtime" />
+                                <span asp-validation-for="Runtime" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="PriceForRent" class="control-label">Price for rent</label>
+                                <input asp-for="PriceForRent" class="form-control" placeholder="Enter price for rent" />
+                                <span asp-validation-for="PriceForRent" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="PriceForBuy" class="control-label">PriceForBuy</label>
+                                <input asp-for="PriceForBuy" class="form-control" placeholder="Enter price for buy" />
+                                <span asp-validation-for="PriceForBuy" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="Synopsis" class="control-label">Synopsis</label>
+                        <textarea asp-for="Synopsis" rows="12" class="form-control" placeholder="Enter synopsis"></textarea>
+                        <span asp-validation-for="Synopsis" class="text-danger"></span>
+                    </div>
+
+
+                </form>
+
+                <div class="form-group">
+                    <div class="col-12 col-md-12">
+                        <label> Upload Photo - Movie Cover</label>
+                        <input type="hidden" asp-for="PhotoURL" hidden id="PhotoURL" />
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <div class="row">
+                            <input type="file" #file accept="image/*" id="photoUpload" />
+                            <button class="btn btn-custom-upload btn-block btn-secondary" id="uploadphoto">Upload Photo</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 col-md-12">
+                        <div class="row">
+                            <input type="submit" value="Edit" class="btn btn-block btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a asp-action="Index">Back to List</a>
+</div>

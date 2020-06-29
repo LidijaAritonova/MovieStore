@@ -1,0 +1,252 @@
+﻿@model MovieStore.Models.MovieViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<<h1 class="bg-dark text-white text-center p-3">Wishlist</h1>
+
+<div class="custom-container">
+    <table class="table table-hover">
+        <thead>
+            <tr class="wishlist-header">
+                @*<th>
+            <input type="checkbox" name="addToCart" id="checkAll" /> Select All
+        </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.PhotoURL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Genre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Director)
+                </th>
+
+                @*<th>
+            @Html.DisplayNameFor(model => model.PriceForRent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceForBuy)
+        </th>*@
+                <th colspan="2">Actions</th>
+                <th colspan="2">Add to cart</th>
+            </tr>
+        </thead>
+
+
+
+
+
+
+        <tbody>
+            @foreach (var item in Model.AllMoviesFromWishlistByLoggedInUser)
+            {
+            <tr>
+                @*<td>
+            <input type="checkbox" name="addToCartSelected" value="@item.Id" />
+        </td>*@
+                <td>
+                    <img src="~/images/@item.PhotoURL" width="100" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DirectorName)
+                </td>
+
+                @*<td>
+            @Html.DisplayFor(modelItem => item.PriceForRent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PriceForBuy)
+        </td>*@
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-block btn-info">
+                        <i class="fas fa-info-circle"></i> &nbsp; Details
+                    </a>
+                </td>
+                <td>
+                    <button class="btn btn-block btn-danger" onclick="DeleteItemFromWishlist(@item.Id)">
+                        <i class="fas fa-trash-alt"></i> &nbsp; Delete
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-block btn-success" id="addToCartAction" disabled>
+                        <i class="fas fa-cart-plus"></i> Rent &nbsp; @item.PriceForRent
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-block btn-success" id="addToCartAction" disabled>
+                        <i class="fas fa-cart-plus"></i> Buy &nbsp; @item.PriceForBuy
+                    </button>
+                </td>
+            </tr>
+            }
+            <tr class="total-style">
+                <td colspan="6"></td>
+                <td>Total:</td>
+                <td> &#36; @Html.DisplayFor(modelItem => modelItem.WishlistTotalPrice)</td>
+            </tr>
+            @*<tr class="total-style">
+                <td colspan="8">
+                    <button class="btn btn-block btn-success" id="addToCartAction" disabled>
+                        <i class="fas fa-cart-plus"></i> &nbsp; Add To Cart
+                    </button>
+                </td>
+            </tr>*@
+        </tbody>
+    </table>
+
+
+    @*<div class="modal fade" id="actionChooseModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" id="modalDialogStyle" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> <span id="detailsTitle"></span> Successfully Added Movies To Cart</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4>Choose option to continue:</h4>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <button type="button" class="btn btn-outline-secondary btn-block" id="stayToWishlist" data-dismiss="modal">Stay to Wishlist</button>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <a asp-action="GoToCart" class="btn btn-outline-success btn-block">Go to Shopping Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        function DeleteItemFromWishlist(id) {
+            $.ajax({
+                type: "POST",
+                url: "/WishList/Delete/" + id,
+                success: function (data) {
+                    //console.log(data);
+                    new Noty({
+                        type: 'alert',
+                        layout: 'bottomLeft',
+                        timeout: 1500,
+                        progressBar: true,
+                        text: 'Successfully Deleted Movie: ' + data.data.title + ' From Wishlist',
+                        theme: 'sunset'
+                    }).show();
+
+                    setTimeout(function () {
+                        if (data) {
+                            window.location = data.url;
+                        }
+                    }, 1800);
+                },
+                error: function () {
+                    new Noty({
+                        type: 'error',
+                        layout: 'bottomLeft',
+                        timeout: 3000,
+                        progressBar: true,
+                        text: 'Error Delete Movie From Wishlist',
+                        theme: 'sunset'
+                    }).show();
+                }
+            });
+        };
+
+
+        $(function () {
+
+            $("#checkAll").click(function () {
+                $("input[name='addToCartSelected']").prop("checked", this.checked);
+                if ($("input[name='addToCartSelected']:checked").length > 0) {
+                    $("#addToCartAction").prop("disabled", false);
+                } else {
+                    $("#addToCartAction").prop("disabled", true);
+                }
+            });
+
+
+            $("input[name='addToCartSelected']").click(function () {
+                if ($("input[name='addToCartSelected']").length == $("input[name='addToCartSelected']:checked").length) {
+                    $("#checkAll").prop("checked", true);
+                } else {
+                    $("#checkAll").prop('checked', false);
+                }
+                if ($("input[name='addToCartSelected']:checked").length > 0) {
+                    $("#addToCartAction").prop("disabled", false);
+                } else {
+                    $("#addToCartAction").prop("disabled", true);
+                }
+            });
+
+
+            $("#addToCartAction").click(function () {
+                var movies = [];
+
+                $.each($("input[name='addToCartSelected']:checked"), function () {
+                    movies.push($(this).val());
+                });
+               
+
+                $.ajax({
+                    type: "POST",
+                    url: "/WishList/AddToCartFromWishlist/",
+                    dataType: 'json',
+                    data: { 'movieIds': movies },
+                    success: function (data) {
+                        //console.log(data);
+                        new Noty({
+                            type: 'success',
+                            layout: 'bottomLeft',
+                            timeout: 500,
+                            progressBar: true,
+                            text: 'Successfully Added Movie To Cart',
+                            theme: 'sunset'
+                        }).show();
+
+                        setTimeout(function () {
+                            $('#actionChooseModal').modal('show');
+                        }, 800);
+                    },
+                    error: function () {
+                        new Noty({
+                            type: 'error',
+                            layout: 'bottomLeft',
+                            timeout: 3000,
+                            progressBar: true,
+                            text: 'Error => Unsuccessfully Added Movie From Wishlist To Shopping Cart',
+                            theme: 'sunset'
+                        }).show();
+                    }
+                });
+            });
+
+
+            $("#stayToWishlist").click(function () {
+                location.reload();
+            });
+
+        });
+
+    </script>
+}
+>
+
